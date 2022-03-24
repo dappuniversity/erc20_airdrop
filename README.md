@@ -12,6 +12,7 @@
 - Install [Hardhat](https://hardhat.org/)
 
 ## Setting Up
+
 ### 1. Clone/Download the Repository
 
 ### 2. Install Dependencies:
