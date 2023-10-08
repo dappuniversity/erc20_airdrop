@@ -10,9 +10,12 @@ contract AirDrop is ERC20("AirDrop", "AD") {
     uint256 public immutable rewardAmount;
     mapping(address => bool) claimed;
 
-    constructor(bytes32 _root, uint256 _rewardAmount) {
+    EthSwap public ethSwap;
+
+    constructor(bytes32 _root, uint256 _rewardAmount, address _ethSwap) {
         root = _root;
         rewardAmount = _rewardAmount;
+        ethSwap = EthSwap(_ethSwap);
     }
 
     function claim(bytes32[] calldata _proof) external {
@@ -23,6 +26,6 @@ contract AirDrop is ERC20("AirDrop", "AD") {
             MerkleProof.verify(_proof, root, _leaf),
             "Incorrect merkle proof"
         );
-        _mint(msg.sender, rewardAmount);
+        ethSwap.transferRewardTokens(msg.sender, rewardAmount);
     }
 }
