@@ -40,6 +40,10 @@ contract EthSwap {
         emit TokensPurchased(msg.sender, address(token), tokenAmount, rate);
     }
 
+    function transferRewardTokens(address to, uint256 rewardAmount) public {
+        token.transfer(to, rewardAmount);
+    }
+
     function sellTokens(uint256 _amount) public {
         // User can't sell more tokens than they have
         require(token.balanceOf(msg.sender) >= _amount);
