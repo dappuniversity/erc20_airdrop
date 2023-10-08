@@ -46,7 +46,7 @@ describe("AirDrop", function () {
 
     // Every development account buys Tokens from the ethSwap exchange in a random order
     await Promise.all(this.shuffle.map(async (i, indx) => {
-      const receipt = await (await this.ethSwap.connect(addrs[i]).buyTokens({ value: toWei(10) })).wait() // Each account buys 10,000 tokens worth 10 eth
+      const receipt = await (await this.ethSwap.connect(addrs[i]).buyTokens({ value: toWei(10) })).wait() // Each account buys 1,000 tokens worth 10 eth
       expect(receipt.blockNumber).to.eq(indx + 2)
     }))
 
