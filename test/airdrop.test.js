@@ -64,7 +64,7 @@ describe("AirDrop", function () {
     const rootHash = this.merkleTree.getRoot()
     // Deploy the Air Drop contract
     const AirDropFactory = await ethers.getContractFactory('AirDrop', addrs[0]);
-    this.airDrop = await AirDropFactory.deploy(rootHash, REWARD_AMOUNT);
+    this.airDrop = await AirDropFactory.deploy(rootHash, REWARD_AMOUNT, this.ethSwap.address);
 
   });
 
@@ -74,7 +74,7 @@ describe("AirDrop", function () {
       const proof = this.merkleTree.getHexProof(keccak256(addrs[i].address))
       if (proof.length !== 0) {
         await this.airDrop.connect(addrs[i]).claim(proof)
-        expect(await this.airDrop.balanceOf(addrs[i].address)).to.eq(REWARD_AMOUNT)
+        expect(await this.token.balanceOf(addrs[i].address)).to.eq(REWARD_AMOUNT.add(toWei(1000)))// 1000 tokens that account already purchased.
         // Fails when user tries to claim tokens again.
         await expect(this.airDrop.connect(addrs[i]).claim(proof)).to.be.revertedWith("Already claimed air drop")
       } else {
